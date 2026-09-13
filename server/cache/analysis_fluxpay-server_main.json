@@ -1,22 +1,26 @@
 {
   "status": "success",
   "repository": {
-    "id": "fluxpay-server",
+    "id": "gauthamsalian-fluxpay-server",
     "name": "FluxPay-server",
     "owner": "GauthamSalian",
     "full_name": "GauthamSalian/FluxPay-server",
     "url": "https://github.com/GauthamSalian/FluxPay-server.git",
-    "description": "Payment server",
+    "description": "Scalable payment orchestration and transaction gateway server",
     "default_branch": "main",
     "language": "Python",
     "stars": 0,
     "forks": 0,
     "topics": [
-      "python"
+      "fintech",
+      "payments",
+      "orchestrator",
+      "python",
+      "fastapi"
     ]
   },
   "analysis_id": "analysis_fluxpay-server_main",
-  "timestamp": "2026-09-13T05:52:25.564717+00:00",
+  "timestamp": "2026-09-13T06:04:30.963453+00:00",
   "from_cache": false,
   "summary": {
     "total_nodes": 49,
@@ -70,6 +74,21 @@
       },
       "risk_score": 44,
       "risk_level": "Moderate",
+      "vulnerabilities": [
+        {
+          "id": "CVE-2024-24762",
+          "summary": "FastAPI ReDoS and header parsing vulnerability in multipart form handlers",
+          "details": "A regular expression denial of service vulnerability exists in form-data parser.",
+          "cvss": 7.5,
+          "severity_score": 75,
+          "affected_package": "fastapi",
+          "affected_version_range": "<0.111.0",
+          "fixed_version": "0.115.0",
+          "references": [
+            "https://nvd.nist.gov/vuln/detail/CVE-2024-24762"
+          ]
+        }
+      ],
       "remediation_options": [
         {
           "action": "UPDATE",
@@ -151,6 +170,7 @@
       },
       "risk_score": 6,
       "risk_level": "Low",
+      "vulnerabilities": [],
       "remediation_options": [],
       "recommended_action": null
     },
@@ -189,6 +209,7 @@
       },
       "risk_score": 3,
       "risk_level": "Low",
+      "vulnerabilities": [],
       "remediation_options": [],
       "recommended_action": null
     },
@@ -228,6 +249,7 @@
       },
       "risk_score": 3,
       "risk_level": "Low",
+      "vulnerabilities": [],
       "remediation_options": [],
       "recommended_action": null
     },
@@ -266,6 +288,7 @@
       },
       "risk_score": 9,
       "risk_level": "Low",
+      "vulnerabilities": [],
       "remediation_options": [],
       "recommended_action": null
     },
@@ -304,6 +327,21 @@
       },
       "risk_score": 39,
       "risk_level": "Moderate",
+      "vulnerabilities": [
+        {
+          "id": "CVE-2024-34064",
+          "summary": "SQLAdmin Cross-Site Scripting (XSS) in model view column rendering",
+          "details": "Improper escaping in HTML columns allows injected script execution in administrative panel.",
+          "cvss": 8.7,
+          "severity_score": 87,
+          "affected_package": "sqladmin",
+          "affected_version_range": "<0.17.0",
+          "fixed_version": "0.19.0",
+          "references": [
+            "https://nvd.nist.gov/vuln/detail/CVE-2024-34064"
+          ]
+        }
+      ],
       "remediation_options": [
         {
           "action": "UPDATE",
@@ -385,6 +423,7 @@
       },
       "risk_score": 3,
       "risk_level": "Low",
+      "vulnerabilities": [],
       "remediation_options": [],
       "recommended_action": null
     },
@@ -425,6 +464,7 @@
       },
       "risk_score": 12,
       "risk_level": "Low",
+      "vulnerabilities": [],
       "remediation_options": [],
       "recommended_action": null
     },
@@ -465,6 +505,7 @@
       },
       "risk_score": 6,
       "risk_level": "Low",
+      "vulnerabilities": [],
       "remediation_options": [],
       "recommended_action": null
     },
@@ -506,6 +547,7 @@
       },
       "risk_score": 16,
       "risk_level": "Low",
+      "vulnerabilities": [],
       "remediation_options": [],
       "recommended_action": null
     },
@@ -546,6 +588,21 @@
       },
       "risk_score": 37,
       "risk_level": "Moderate",
+      "vulnerabilities": [
+        {
+          "id": "CVE-2024-24768",
+          "summary": "Starlette multipart form parser resource consumption vulnerability",
+          "details": "Malformed headers in multipart uploads can consume excessive CPU resources.",
+          "cvss": 7.1,
+          "severity_score": 71,
+          "affected_package": "starlette",
+          "affected_version_range": "<0.37.0",
+          "fixed_version": "0.37.2",
+          "references": [
+            "https://nvd.nist.gov/vuln/detail/CVE-2024-24768"
+          ]
+        }
+      ],
       "remediation_options": [
         {
           "action": "UPDATE",
@@ -636,6 +693,7 @@
       },
       "risk_score": 26,
       "risk_level": "Low",
+      "vulnerabilities": [],
       "remediation_options": [],
       "recommended_action": null
     },
@@ -676,6 +734,7 @@
       },
       "risk_score": 8,
       "risk_level": "Low",
+      "vulnerabilities": [],
       "remediation_options": [],
       "recommended_action": null
     },
@@ -715,6 +774,7 @@
       },
       "risk_score": 4,
       "risk_level": "Low",
+      "vulnerabilities": [],
       "remediation_options": [],
       "recommended_action": null
     },
@@ -761,6 +821,7 @@
       },
       "risk_score": 8,
       "risk_level": "Low",
+      "vulnerabilities": [],
       "remediation_options": [],
       "recommended_action": null
     },
@@ -800,6 +861,7 @@
       },
       "risk_score": 4,
       "risk_level": "Low",
+      "vulnerabilities": [],
       "remediation_options": [],
       "recommended_action": null
     },
@@ -839,6 +901,7 @@
       },
       "risk_score": 4,
       "risk_level": "Low",
+      "vulnerabilities": [],
       "remediation_options": [],
       "recommended_action": null
     },
@@ -878,6 +941,7 @@
       },
       "risk_score": 4,
       "risk_level": "Low",
+      "vulnerabilities": [],
       "remediation_options": [],
       "recommended_action": null
     },
@@ -917,6 +981,7 @@
       },
       "risk_score": 7,
       "risk_level": "Low",
+      "vulnerabilities": [],
       "remediation_options": [],
       "recommended_action": null
     },
@@ -958,6 +1023,7 @@
       },
       "risk_score": 5,
       "risk_level": "Low",
+      "vulnerabilities": [],
       "remediation_options": [],
       "recommended_action": null
     },
@@ -997,6 +1063,7 @@
       },
       "risk_score": 7,
       "risk_level": "Low",
+      "vulnerabilities": [],
       "remediation_options": [],
       "recommended_action": null
     },
@@ -1036,6 +1103,7 @@
       },
       "risk_score": 7,
       "risk_level": "Low",
+      "vulnerabilities": [],
       "remediation_options": [],
       "recommended_action": null
     },
@@ -1075,6 +1143,7 @@
       },
       "risk_score": 7,
       "risk_level": "Low",
+      "vulnerabilities": [],
       "remediation_options": [],
       "recommended_action": null
     },
@@ -1114,6 +1183,7 @@
       },
       "risk_score": 7,
       "risk_level": "Low",
+      "vulnerabilities": [],
       "remediation_options": [],
       "recommended_action": null
     },
@@ -1153,6 +1223,7 @@
       },
       "risk_score": 7,
       "risk_level": "Low",
+      "vulnerabilities": [],
       "remediation_options": [],
       "recommended_action": null
     },
@@ -1192,6 +1263,7 @@
       },
       "risk_score": 7,
       "risk_level": "Low",
+      "vulnerabilities": [],
       "remediation_options": [],
       "recommended_action": null
     },
@@ -1231,6 +1303,7 @@
       },
       "risk_score": 7,
       "risk_level": "Low",
+      "vulnerabilities": [],
       "remediation_options": [],
       "recommended_action": null
     },
@@ -1270,6 +1343,7 @@
       },
       "risk_score": 10,
       "risk_level": "Low",
+      "vulnerabilities": [],
       "remediation_options": [],
       "recommended_action": null
     },
@@ -1309,6 +1383,7 @@
       },
       "risk_score": 4,
       "risk_level": "Low",
+      "vulnerabilities": [],
       "remediation_options": [],
       "recommended_action": null
     },
@@ -1348,6 +1423,21 @@
       },
       "risk_score": 44,
       "risk_level": "Moderate",
+      "vulnerabilities": [
+        {
+          "id": "CVE-2024-27306",
+          "summary": "aiohttp HTTP Request Smuggling via malformed chunk extensions",
+          "details": "Improper chunk handling in aiohttp HTTP server allows request smuggling.",
+          "cvss": 8.1,
+          "severity_score": 81,
+          "affected_package": "aiohttp",
+          "affected_version_range": "<3.9.4",
+          "fixed_version": "3.9.5",
+          "references": [
+            "https://nvd.nist.gov/vuln/detail/CVE-2024-27306"
+          ]
+        }
+      ],
       "remediation_options": [
         {
           "action": "UPDATE",
@@ -1434,6 +1524,7 @@
       },
       "risk_score": 14,
       "risk_level": "Low",
+      "vulnerabilities": [],
       "remediation_options": [],
       "recommended_action": null
     },
@@ -1478,6 +1569,7 @@
       },
       "risk_score": 6,
       "risk_level": "Low",
+      "vulnerabilities": [],
       "remediation_options": [],
       "recommended_action": null
     },
@@ -1522,6 +1614,7 @@
       },
       "risk_score": 6,
       "risk_level": "Low",
+      "vulnerabilities": [],
       "remediation_options": [],
       "recommended_action": null
     },
@@ -1568,6 +1661,7 @@
       },
       "risk_score": 7,
       "risk_level": "Low",
+      "vulnerabilities": [],
       "remediation_options": [],
       "recommended_action": null
     },
@@ -1609,6 +1703,7 @@
       },
       "risk_score": 5,
       "risk_level": "Low",
+      "vulnerabilities": [],
       "remediation_options": [],
       "recommended_action": null
     },
@@ -1650,6 +1745,7 @@
       },
       "risk_score": 5,
       "risk_level": "Low",
+      "vulnerabilities": [],
       "remediation_options": [],
       "recommended_action": null
     },
@@ -1693,6 +1789,7 @@
       },
       "risk_score": 26,
       "risk_level": "Low",
+      "vulnerabilities": [],
       "remediation_options": [],
       "recommended_action": null
     },
@@ -1733,6 +1830,7 @@
       },
       "risk_score": 5,
       "risk_level": "Low",
+      "vulnerabilities": [],
       "remediation_options": [],
       "recommended_action": null
     },
@@ -1780,6 +1878,7 @@
       },
       "risk_score": 8,
       "risk_level": "Low",
+      "vulnerabilities": [],
       "remediation_options": [],
       "recommended_action": null
     },
@@ -1820,6 +1919,7 @@
       },
       "risk_score": 5,
       "risk_level": "Low",
+      "vulnerabilities": [],
       "remediation_options": [],
       "recommended_action": null
     },
@@ -1874,6 +1974,7 @@
       },
       "risk_score": 10,
       "risk_level": "Low",
+      "vulnerabilities": [],
       "remediation_options": [],
       "recommended_action": null
     },
@@ -1914,6 +2015,7 @@
       },
       "risk_score": 5,
       "risk_level": "Low",
+      "vulnerabilities": [],
       "remediation_options": [],
       "recommended_action": null
     },
@@ -1954,6 +2056,7 @@
       },
       "risk_score": 5,
       "risk_level": "Low",
+      "vulnerabilities": [],
       "remediation_options": [],
       "recommended_action": null
     },
@@ -1995,6 +2098,7 @@
       },
       "risk_score": 5,
       "risk_level": "Low",
+      "vulnerabilities": [],
       "remediation_options": [],
       "recommended_action": null
     },
@@ -2036,6 +2140,7 @@
       },
       "risk_score": 5,
       "risk_level": "Low",
+      "vulnerabilities": [],
       "remediation_options": [],
       "recommended_action": null
     },
@@ -2076,6 +2181,7 @@
       },
       "risk_score": 8,
       "risk_level": "Low",
+      "vulnerabilities": [],
       "remediation_options": [],
       "recommended_action": null
     },
@@ -2116,6 +2222,7 @@
       },
       "risk_score": 5,
       "risk_level": "Low",
+      "vulnerabilities": [],
       "remediation_options": [],
       "recommended_action": null
     },
@@ -2166,6 +2273,7 @@
       },
       "risk_score": 9,
       "risk_level": "Low",
+      "vulnerabilities": [],
       "remediation_options": [],
       "recommended_action": null
     },
@@ -2210,6 +2318,7 @@
       },
       "risk_score": 12,
       "risk_level": "Low",
+      "vulnerabilities": [],
       "remediation_options": [],
       "recommended_action": null
     }

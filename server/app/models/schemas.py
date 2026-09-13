@@ -1,5 +1,5 @@
 """
-Pydantic Schemas for DepLens / RippleLens Graph Analysis Pipeline.
+Pydantic Schemas for DepLens Graph Analysis Pipeline.
 """
 
 from typing import List, Optional, Dict, Any
@@ -84,6 +84,9 @@ class NodeInfo(BaseModel):
     risk_score: int = 0  # 35% Severity + 30% BlastRadius + 20% Centrality + 15% CodeUsage
     risk_level: str = "Low"  # Low, Moderate, High, Critical, Severe
     
+    # Vulnerability & Severity details
+    vulnerabilities: List[VulnerabilityDetail] = []
+    
     # Remediation
     remediation_options: List[RemediationOption] = []
     recommended_action: Optional[str] = None
@@ -148,6 +151,7 @@ class PackageUsageDetail(BaseModel):
     severity_score: int = 0
     total_occurrences: int = 0
     affected_files_count: int = 0
+    vulnerabilities: List[VulnerabilityDetail] = []
     files: List[FileUsage] = []
 
 

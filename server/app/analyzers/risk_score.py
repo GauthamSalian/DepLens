@@ -1,6 +1,6 @@
 """
 Risk Score Calculator Module.
-Computes composite RippleLens / ChainShield risk scores and categories.
+Computes composite DepLens risk scores and categories.
 """
 
 from typing import Tuple
@@ -8,7 +8,7 @@ from typing import Tuple
 
 def map_risk_level(risk_score: int) -> str:
     """
-    Maps 0-100 risk score to RippleLens risk levels:
+    Maps 0-100 risk score to DepLens risk levels:
     0-29   -> Low
     30-49  -> Moderate
     50-69  -> High

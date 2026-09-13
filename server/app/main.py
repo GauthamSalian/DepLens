@@ -1,5 +1,5 @@
 """
-DepLens / RippleLens Main FastAPI Application.
+DepLens Main FastAPI Application.
 """
 
 from fastapi import FastAPI
@@ -13,7 +13,7 @@ from .services.github import parse_repo_slug
 from .models.schemas import RepositoryItem
 
 app = FastAPI(
-    title="DepLens / RippleLens Supply Chain Intelligence API",
+    title="DepLens Supply Chain Intelligence API",
     description="Backend API service for dependency graphing, blast radius, centrality, and risk scoring",
     version="2.0.0",
 )
@@ -88,4 +88,4 @@ def legacy_analyze_repo(request: AnalyzeRequest):
 
 @app.get("/health")
 def health_check():
-    return {"status": "ok", "service": "DepLens / RippleLens API v2.0"}
+    return {"status": "ok", "service": "DepLens API v2.0"}

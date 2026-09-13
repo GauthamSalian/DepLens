@@ -10,7 +10,7 @@ import re
 
 def _map_files_to_score(file_count: int) -> int:
     """
-    Score buckets as defined in RippleLens spec:
+    Score buckets as defined in DepLens spec:
     0 files    -> 10
     1-2 files  -> 30
     3-5 files  -> 60

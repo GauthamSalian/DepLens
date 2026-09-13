@@ -1,6 +1,6 @@
 """
 Analysis API Router.
-Executes the full ChainShield / RippleLens graph pipeline with caching.
+Executes the full DepLens graph pipeline with caching.
 """
 
 from typing import Dict, List, Optional
@@ -189,6 +189,7 @@ def run_pipeline(repo_item: RepositoryItem, force_refresh: bool = False) -> Grap
                 blast_radius_detail=blast_detail,
                 risk_score=risk_score,
                 risk_level=risk_level,
+                vulnerabilities=[vuln_info] if vuln_info else [],
                 remediation_options=remediation_opts,
                 recommended_action=rec_action,
             )

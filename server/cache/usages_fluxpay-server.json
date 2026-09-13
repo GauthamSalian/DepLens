@@ -1,7 +1,7 @@
 {
   "status": "success",
   "repository": "FluxPay-server",
-  "timestamp": "2026-09-13T05:58:52.612992+00:00",
+  "timestamp": "2026-09-13T06:04:38.373408+00:00",
   "from_cache": false,
   "total_vulnerable_packages": 4,
   "total_affected_files": 7,
@@ -13,6 +13,21 @@
       "severity_score": 75,
       "total_occurrences": 32,
       "affected_files_count": 5,
+      "vulnerabilities": [
+        {
+          "id": "CVE-2024-24762",
+          "summary": "FastAPI ReDoS and header parsing vulnerability in multipart form handlers",
+          "details": "A regular expression denial of service vulnerability exists in form-data parser.",
+          "cvss": 7.5,
+          "severity_score": 75,
+          "affected_package": "fastapi",
+          "affected_version_range": "<0.111.0",
+          "fixed_version": "0.115.0",
+          "references": [
+            "https://nvd.nist.gov/vuln/detail/CVE-2024-24762"
+          ]
+        }
+      ],
       "files": [
         {
           "file_path": "app.py",
@@ -117,8 +132,8 @@
               "line_end": 106,
               "snippet": "def get_deposit_history_route(current_user: dict = Depends(get_current_user)):\n    try:\n        user_id = str(current_user.get(\"id\"))\n        deposits = walletservices.get_deposit_history(user_id=user_id)\n        return {\"deposits\": deposits}\n    except ValueError as e:\n        raise HTTPException(status_code=400, detail=str(e))",
               "imported_symbols_used": [
-                "HTTPException",
-                "Depends"
+                "Depends",
+                "HTTPException"
               ]
             },
             {
@@ -155,8 +170,8 @@
               "line_end": 36,
               "snippet": "def get_transaction_history_route(current_user: dict = Depends(get_current_user)):\n    try:\n        user_id = str(current_user[\"id\"])\n        history = transactionservices.get_transaction_history(user_id)\n        return {\"transactions\": history}\n    except Exception as e:\n        raise HTTPException(status_code=400, detail=str(e))",
               "imported_symbols_used": [
-                "HTTPException",
-                "Depends"
+                "Depends",
+                "HTTPException"
               ]
             },
             {
@@ -166,8 +181,8 @@
               "line_end": 46,
               "snippet": "def verify_phone_route(phone: str, current_user: dict = Depends(get_current_user)):\n    try:\n        name = transactionservices.get_name_by_phone(phone)\n        return {\"name\": name}\n    except ValueError as e:\n        raise HTTPException(status_code=404, detail=str(e))\n    except Exception as e:",
               "imported_symbols_used": [
-                "HTTPException",
-                "Depends"
+                "Depends",
+                "HTTPException"
               ]
             },
             {
@@ -177,8 +192,8 @@
               "line_end": 56,
               "snippet": "def verify_wallet_route(wallet_id: str, current_user: dict = Depends(get_current_user)):\n    try:\n        name = transactionservices.get_name_by_wallet_id(wallet_id)\n        return {\"name\": name}\n    except ValueError as e:\n        raise HTTPException(status_code=404, detail=str(e))\n    except Exception as e:",
               "imported_symbols_used": [
-                "HTTPException",
-                "Depends"
+                "Depends",
+                "HTTPException"
               ]
             },
             {
@@ -347,8 +362,8 @@
               "line_end": 236,
               "snippet": "def get_current_user(token: str = Depends(oauth2_scheme)):\n    credentials_exception = HTTPException(\n        status_code=401,\n        detail=\"Could not validate credentials\",\n        headers={\"WWW-Authenticate\": \"Bearer\"},\n    )\n    try:",
               "imported_symbols_used": [
-                "HTTPException",
-                "Depends"
+                "Depends",
+                "HTTPException"
               ]
             },
             {
@@ -373,6 +388,21 @@
       "severity_score": 87,
       "total_occurrences": 0,
       "affected_files_count": 0,
+      "vulnerabilities": [
+        {
+          "id": "CVE-2024-34064",
+          "summary": "SQLAdmin Cross-Site Scripting (XSS) in model view column rendering",
+          "details": "Improper escaping in HTML columns allows injected script execution in administrative panel.",
+          "cvss": 8.7,
+          "severity_score": 87,
+          "affected_package": "sqladmin",
+          "affected_version_range": "<0.17.0",
+          "fixed_version": "0.19.0",
+          "references": [
+            "https://nvd.nist.gov/vuln/detail/CVE-2024-34064"
+          ]
+        }
+      ],
       "files": []
     },
     "supabase": {
@@ -382,6 +412,7 @@
       "severity_score": 0,
       "total_occurrences": 2,
       "affected_files_count": 1,
+      "vulnerabilities": [],
       "files": [
         {
           "file_path": "db.py",
@@ -418,6 +449,7 @@
       "severity_score": 0,
       "total_occurrences": 3,
       "affected_files_count": 1,
+      "vulnerabilities": [],
       "files": [
         {
           "file_path": "services/userservices.py",
@@ -463,6 +495,7 @@
       "severity_score": 0,
       "total_occurrences": 5,
       "affected_files_count": 2,
+      "vulnerabilities": [],
       "files": [
         {
           "file_path": "services/walletservices.py",
@@ -533,6 +566,21 @@
       "severity_score": 71,
       "total_occurrences": 0,
       "affected_files_count": 0,
+      "vulnerabilities": [
+        {
+          "id": "CVE-2024-24768",
+          "summary": "Starlette multipart form parser resource consumption vulnerability",
+          "details": "Malformed headers in multipart uploads can consume excessive CPU resources.",
+          "cvss": 7.1,
+          "severity_score": 71,
+          "affected_package": "starlette",
+          "affected_version_range": "<0.37.0",
+          "fixed_version": "0.37.2",
+          "references": [
+            "https://nvd.nist.gov/vuln/detail/CVE-2024-24768"
+          ]
+        }
+      ],
       "files": []
     },
     "pydantic": {
@@ -542,6 +590,7 @@
       "severity_score": 0,
       "total_occurrences": 3,
       "affected_files_count": 3,
+      "vulnerabilities": [],
       "files": [
         {
           "file_path": "api/walletroutes.py",
@@ -594,6 +643,21 @@
       "severity_score": 81,
       "total_occurrences": 0,
       "affected_files_count": 0,
+      "vulnerabilities": [
+        {
+          "id": "CVE-2024-27306",
+          "summary": "aiohttp HTTP Request Smuggling via malformed chunk extensions",
+          "details": "Improper chunk handling in aiohttp HTTP server allows request smuggling.",
+          "cvss": 8.1,
+          "severity_score": 81,
+          "affected_package": "aiohttp",
+          "affected_version_range": "<3.9.4",
+          "fixed_version": "3.9.5",
+          "references": [
+            "https://nvd.nist.gov/vuln/detail/CVE-2024-27306"
+          ]
+        }
+      ],
       "files": []
     }
   }

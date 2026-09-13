@@ -185,6 +185,7 @@ def analyze_repository_usages(repo_name: str, force_refresh: bool = False) -> Us
             severity_score=vuln_item.severity_score if vuln_item else 0,
             total_occurrences=0,
             affected_files_count=0,
+            vulnerabilities=[vuln_item] if vuln_item else [],
             files=[],
         )
 
