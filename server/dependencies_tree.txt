@@ -1,0 +1,130 @@
+# FluxPay-server Dependency Tree & Direct-Transitive Linkages
+# Formatted for NetworkX graph construction and supply chain visualization
+
+ROOT: FluxPay-server (language=Python, ecosystem=pip)
+
+[DIRECT DEPENDENCIES] & [TRANSITIVE LINKAGES]
+
+1. fastapi==0.110.0
+   ├── starlette==0.36.3
+   │   └── anyio==4.3.0
+   │       ├── idna==3.6
+   │       └── sniffio==1.3.1
+   └── pydantic==2.6.4
+       ├── pydantic-core==2.16.3
+       ├── annotated-types==0.6.0
+       └── typing-extensions==4.10.0
+
+2. sqlmodel==0.0.16
+   ├── sqlalchemy==2.0.28
+   │   ├── typing-extensions==4.10.0
+   │   └── greenlet==3.0.3
+   └── pydantic==2.6.4
+       ├── pydantic-core==2.16.3
+       ├── annotated-types==0.6.0
+       └── typing-extensions==4.10.0
+
+3. psycopg2-binary==2.9.9
+   └── (none - standalone binary adapter)
+
+4. python-dotenv==1.0.1
+   └── (none - standalone environment parser)
+
+5. uvicorn[standard]==0.28.0
+   ├── click==8.1.7
+   ├── h11==0.14.0
+   ├── httptools==0.6.1
+   ├── python-dotenv==1.0.1
+   ├── pyyaml==6.0.1
+   ├── uvloop==0.19.0
+   ├── watchfiles==0.21.0
+   │   └── anyio==4.3.0
+   │       ├── idna==3.6
+   │       └── sniffio==1.3.1
+   └── websockets==12.0
+
+6. sqladmin==0.16.1
+   ├── starlette==0.36.3
+   │   └── anyio==4.3.0
+   │       ├── idna==3.6
+   │       └── sniffio==1.3.1
+   ├── sqlalchemy==2.0.28
+   │   ├── typing-extensions==4.10.0
+   │   └── greenlet==3.0.3
+   ├── jinja2==3.1.3
+   │   └── markupsafe==2.1.5
+   └── wtforms==3.1.2
+       └── markupsafe==2.1.5
+
+7. itsdangerous==2.1.2
+   └── (none - standalone cryptographic signing utility)
+
+8. supabase==2.3.4
+   ├── gotrue==2.4.2
+   │   ├── httpx==0.27.0
+   │   │   ├── httpcore==1.0.4
+   │   │   │   ├── h11==0.14.0
+   │   │   │   └── certifi==2024.2.2
+   │   │   ├── certifi==2024.2.2
+   │   │   ├── idna==3.6
+   │   │   └── sniffio==1.3.1
+   │   └── pydantic==2.6.4
+   │       ├── pydantic-core==2.16.3
+   │       ├── annotated-types==0.6.0
+   │       └── typing-extensions==4.10.0
+   ├── postgrest==0.13.2
+   │   ├── httpx==0.27.0
+   │   │   ├── httpcore==1.0.4
+   │   │   │   ├── h11==0.14.0
+   │   │   │   └── certifi==2024.2.2
+   │   │   ├── certifi==2024.2.2
+   │   │   ├── idna==3.6
+   │   │   └── sniffio==1.3.1
+   │   └── pydantic==2.6.4
+   │       ├── pydantic-core==2.16.3
+   │       ├── annotated-types==0.6.0
+   │       └── typing-extensions==4.10.0
+   ├── realtime==1.0.4
+   │   └── websockets==12.0
+   ├── storage3==0.7.2
+   │   └── httpx==0.27.0
+   │       ├── httpcore==1.0.4
+   │       │   ├── h11==0.14.0
+   │       │   └── certifi==2024.2.2
+   │       ├── certifi==2024.2.2
+   │       ├── idna==3.6
+   │       └── sniffio==1.3.1
+   └── supafunc==0.3.2
+       └── httpx==0.27.0
+           ├── httpcore==1.0.4
+           │   ├── h11==0.14.0
+           │   └── certifi==2024.2.2
+           ├── certifi==2024.2.2
+           ├── idna==3.6
+           └── sniffio==1.3.1
+
+9. bcrypt==4.1.2
+   └── (none - standalone native hash extension)
+
+10. twilio==9.0.2
+    ├── requests==2.31.0
+    │   ├── urllib3==2.2.1
+    │   ├── certifi==2024.2.2
+    │   ├── charset-normalizer==3.3.2
+    │   └── idna==3.6
+    ├── pyjwt==2.8.0
+    └── aiohttp==3.9.3
+        ├── aiosignal==1.3.1
+        │   └── frozenlist==1.4.1
+        ├── attrs==23.2.0
+        ├── frozenlist==1.4.1
+        ├── multidict==6.0.5
+        ├── yarl==1.9.4
+        │   ├── multidict==6.0.5
+        │   └── idna==3.6
+        └── async-timeout==4.0.3
+
+# SUMMARY:
+# - Direct dependencies: 10
+# - Transitive dependencies: 26
+# - Total unique nodes: 36

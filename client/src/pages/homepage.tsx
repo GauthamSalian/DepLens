@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { SearchBar } from '../components/SearchBar'
 import type { RepositoryItem, RepositoryAnalysisResponse } from '../components/SearchBar'
+import DependencyGraphDrawer from '../components/DependencyGraphDrawer'
 import './HomePage.css'
 
 export const HomePage: React.FC = () => {
@@ -12,10 +13,10 @@ export const HomePage: React.FC = () => {
     url: 'https://github.com/GauthamSalian/FluxPay-server.git',
     description: 'Scalable payment orchestration and transaction gateway server',
     default_branch: 'main',
-    language: 'TypeScript',
-    stars: 142,
-    forks: 18,
-    topics: ['fintech', 'payments', 'orchestrator', 'typescript', 'microservices'],
+    language: 'Python',
+    stars: 0,
+    forks: 0,
+    topics: ['fintech', 'payments', 'orchestrator', 'python', 'fastapi'],
   })
 
   const [analysisData, setAnalysisData] = useState<RepositoryAnalysisResponse | null>({
@@ -29,24 +30,64 @@ export const HomePage: React.FC = () => {
       url: 'https://github.com/GauthamSalian/FluxPay-server.git',
       description: 'Scalable payment orchestration and transaction gateway server',
       default_branch: 'main',
-      language: 'TypeScript',
-      stars: 142,
-      forks: 18,
-      topics: ['fintech', 'payments', 'orchestrator', 'typescript'],
+      language: 'Python',
+      stars: 0,
+      forks: 0,
+      topics: ['fintech', 'payments', 'orchestrator', 'python', 'fastapi'],
     },
     analysis_id: 'analysis_fluxpay-server_main',
     dependencies: {
-      total: 48,
-      direct: 14,
-      transitive: 34,
-      outdated: 6,
+      total: 36,
+      direct: 10,
+      transitive: 26,
+      outdated: 8,
       vulnerabilities: 2,
     },
+    packages: [
+      { name: 'fastapi', version: '0.110.0', latest_version: '0.115.0', is_outdated: true, vulnerabilities_count: 1, license: 'MIT' },
+      { name: 'sqlmodel', version: '0.0.16', latest_version: '0.0.22', is_outdated: true, vulnerabilities_count: 0, license: 'MIT' },
+      { name: 'psycopg2-binary', version: '2.9.9', latest_version: '2.9.9', is_outdated: false, vulnerabilities_count: 0, license: 'LGPL' },
+      { name: 'python-dotenv', version: '1.0.1', latest_version: '1.0.1', is_outdated: false, vulnerabilities_count: 0, license: 'MIT' },
+      { name: 'uvicorn[standard]', version: '0.28.0', latest_version: '0.30.6', is_outdated: true, vulnerabilities_count: 0, license: 'MIT' },
+      { name: 'sqladmin', version: '0.16.1', latest_version: '0.19.0', is_outdated: true, vulnerabilities_count: 1, license: 'MIT' },
+      { name: 'itsdangerous', version: '2.1.2', latest_version: '2.2.0', is_outdated: true, vulnerabilities_count: 0, license: 'MIT' },
+      { name: 'supabase', version: '2.3.4', latest_version: '2.8.0', is_outdated: true, vulnerabilities_count: 0, license: 'MIT' },
+      { name: 'bcrypt', version: '4.1.2', latest_version: '4.2.0', is_outdated: true, vulnerabilities_count: 0, license: 'MIT' },
+      { name: 'twilio', version: '9.0.2', latest_version: '9.3.2', is_outdated: true, vulnerabilities_count: 0, license: 'MIT' },
+    ],
     default_branch: 'main',
-    available_branches: ['main', 'dev', 'release-v1.2'],
+    available_branches: ['main'],
   })
 
+  // Sync initial repository analysis dynamically from backend on mount
+  useEffect(() => {
+    let isCancelled = false
+    const syncInitialAnalysis = async () => {
+      try {
+        const res = await fetch('/api/repositories/analyze', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ repo_url: 'https://github.com/GauthamSalian/FluxPay-server.git' }),
+        })
+        if (res.ok) {
+          const data: RepositoryAnalysisResponse = await res.json()
+          if (!isCancelled) {
+            setSelectedRepo(data.repo)
+            setAnalysisData(data)
+          }
+        }
+      } catch {
+        // Fallback pre-populated
+      }
+    }
+    syncInitialAnalysis()
+    return () => {
+      isCancelled = true
+    }
+  }, [])
+
   const [copiedUrl, setCopiedUrl] = useState(false)
+  const [isGraphDrawerOpen, setIsGraphDrawerOpen] = useState(false)
 
   const handleSelectRepo = (repo: RepositoryItem) => {
     setSelectedRepo(repo)
@@ -180,37 +221,95 @@ export const HomePage: React.FC = () => {
 
               {/* Dependency Metrics Summary */}
               {analysisData && (
-                <div className="metrics-grid">
-                  <div className="metric-box">
-                    <span className="metric-label">Total Dependencies</span>
-                    <span className="metric-number text-white">{analysisData.dependencies.total}</span>
-                    <span className="metric-sub">Direct & transitive</span>
+                <>
+                  <div className="metrics-grid">
+                    <div className="metric-box">
+                      <span className="metric-label">Total Dependencies</span>
+                      <span className="metric-number text-white">{analysisData.dependencies.total}</span>
+                      <span className="metric-sub">Direct & transitive</span>
+                    </div>
+
+                    <div className="metric-box">
+                      <span className="metric-label">Direct Modules</span>
+                      <span className="metric-number text-cyan">{analysisData.dependencies.direct}</span>
+                      <span className="metric-sub">Declared in requirements.txt</span>
+                    </div>
+
+                    <div className="metric-box">
+                      <span className="metric-label">Transitive Tree</span>
+                      <span className="metric-number text-purple">{analysisData.dependencies.transitive}</span>
+                      <span className="metric-sub">Sub-dependencies</span>
+                    </div>
+
+                    <div className="metric-box">
+                      <span className="metric-label">Outdated Packages</span>
+                      <span className="metric-number text-amber">{analysisData.dependencies.outdated}</span>
+                      <span className="metric-sub">Updates recommended</span>
+                    </div>
+
+                    <div className="metric-box">
+                      <span className="metric-label">Security Alerts</span>
+                      <span className="metric-number text-rose">{analysisData.dependencies.vulnerabilities}</span>
+                      <span className="metric-sub">Audit flags found</span>
+                    </div>
                   </div>
 
-                  <div className="metric-box">
-                    <span className="metric-label">Direct Modules</span>
-                    <span className="metric-number text-cyan">{analysisData.dependencies.direct}</span>
-                    <span className="metric-sub">Declared in manifest</span>
-                  </div>
-
-                  <div className="metric-box">
-                    <span className="metric-label">Transitive Tree</span>
-                    <span className="metric-number text-purple">{analysisData.dependencies.transitive}</span>
-                    <span className="metric-sub">Sub-dependencies</span>
-                  </div>
-
-                  <div className="metric-box">
-                    <span className="metric-label">Outdated Packages</span>
-                    <span className="metric-number text-amber">{analysisData.dependencies.outdated}</span>
-                    <span className="metric-sub">Updates recommended</span>
-                  </div>
-
-                  <div className="metric-box">
-                    <span className="metric-label">Security Alerts</span>
-                    <span className="metric-number text-rose">{analysisData.dependencies.vulnerabilities}</span>
-                    <span className="metric-sub">Audit flags found</span>
-                  </div>
-                </div>
+                  {/* Parsed Direct Dependencies Table */}
+                  {analysisData.packages && analysisData.packages.length > 0 && (
+                    <div className="packages-table-section">
+                      <div className="packages-table-header">
+                        <h3 className="table-title">Direct Dependencies Manifest ({analysisData.packages.length})</h3>
+                        <span className="table-subtitle">Parsed from repos/FluxPay-server/requirements.txt</span>
+                      </div>
+                      <div className="table-wrapper">
+                        <table className="packages-table">
+                          <thead>
+                            <tr>
+                              <th>Package</th>
+                              <th>Current Version</th>
+                              <th>Latest Version</th>
+                              <th>License</th>
+                              <th>Status</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {analysisData.packages.map((pkg) => (
+                              <tr key={pkg.name}>
+                                <td className="pkg-name-cell">
+                                  <span className="pkg-name">{pkg.name}</span>
+                                </td>
+                                <td className="pkg-ver-cell">
+                                  <code className="version-code">{pkg.version}</code>
+                                </td>
+                                <td className="pkg-ver-cell">
+                                  <code className="version-code latest">{pkg.latest_version || 'Latest'}</code>
+                                </td>
+                                <td>
+                                  <span className="license-tag">{pkg.license || 'MIT'}</span>
+                                </td>
+                                <td>
+                                  {pkg.vulnerabilities_count ? (
+                                    <span className="status-badge status-alert">
+                                      {pkg.vulnerabilities_count} CVE Flag
+                                    </span>
+                                  ) : pkg.is_outdated ? (
+                                    <span className="status-badge status-outdated">
+                                      Update Available
+                                    </span>
+                                  ) : (
+                                    <span className="status-badge status-ok">
+                                      Up to Date
+                                    </span>
+                                  )}
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  )}
+                </>
               )}
 
               {/* Action Toolbar */}
@@ -232,7 +331,11 @@ export const HomePage: React.FC = () => {
                   <button type="button" className="btn-secondary">
                     Export SBOM
                   </button>
-                  <button type="button" className="btn-primary">
+                  <button
+                    type="button"
+                    className="btn-primary"
+                    onClick={() => setIsGraphDrawerOpen(true)}
+                  >
                     Launch Dependency Graph
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="btn-icon">
                       <polyline points="9 18 15 12 9 6" />
@@ -291,6 +394,14 @@ export const HomePage: React.FC = () => {
       <footer className="home-footer">
         <p>© 2026 DepLens. Built for modern software supply chain transparency.</p>
       </footer>
+
+      {/* Interactive Dependency Graph & Blast Radius Drawer */}
+      <DependencyGraphDrawer
+        isOpen={isGraphDrawerOpen}
+        onClose={() => setIsGraphDrawerOpen(false)}
+        repoUrl={selectedRepo?.url}
+        repoName={selectedRepo?.full_name}
+      />
     </div>
   )
 }

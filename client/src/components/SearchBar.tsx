@@ -15,6 +15,15 @@ export interface RepositoryItem {
   topics?: string[]
 }
 
+export interface PackageItem {
+  name: string
+  version: string
+  latest_version?: string
+  is_outdated?: boolean
+  vulnerabilities_count?: number
+  license?: string
+}
+
 export interface DependencySummary {
   total: number
   direct: number
@@ -29,6 +38,7 @@ export interface RepositoryAnalysisResponse {
   repo: RepositoryItem
   analysis_id: string
   dependencies: DependencySummary
+  packages?: PackageItem[]
   default_branch: string
   available_branches: string[]
 }
@@ -50,10 +60,10 @@ const FALLBACK_REPOSITORIES: RepositoryItem[] = [
     url: 'https://github.com/GauthamSalian/FluxPay-server.git',
     description: 'Scalable payment orchestration and transaction gateway server',
     default_branch: 'main',
-    language: 'TypeScript',
-    stars: 142,
-    forks: 18,
-    topics: ['fintech', 'payments', 'orchestrator', 'typescript'],
+    language: 'Python',
+    stars: 0,
+    forks: 0,
+    topics: ['fintech', 'payments', 'orchestrator', 'python', 'fastapi'],
   },
 ]
 
@@ -199,7 +209,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
         url: targetUrl,
         description: 'Target GitHub Repository for DepLens analysis',
         default_branch: 'main',
-        language: 'TypeScript',
+        language: 'Python',
       }
 
       const fallbackAnalysis: RepositoryAnalysisResponse = {
@@ -208,10 +218,10 @@ export const SearchBar: React.FC<SearchBarProps> = ({
         repo: fallbackRepo,
         analysis_id: `analysis_${fallbackRepo.id}_main`,
         dependencies: {
-          total: 48,
-          direct: 14,
-          transitive: 34,
-          outdated: 6,
+          total: 36,
+          direct: 10,
+          transitive: 26,
+          outdated: 8,
           vulnerabilities: 2,
         },
         default_branch: 'main',
@@ -430,7 +440,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
             <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
           </svg>
           <span className="chip-title">GauthamSalian/FluxPay-server</span>
-          <span className="chip-tag">TypeScript</span>
+          <span className="chip-tag">{suggestions.find((s) => s.id === 'fluxpay-server')?.language || 'Python'}</span>
         </button>
       </div>
 

@@ -1,0 +1,600 @@
+{
+  "status": "success",
+  "repository": "FluxPay-server",
+  "timestamp": "2026-09-13T05:58:52.612992+00:00",
+  "from_cache": false,
+  "total_vulnerable_packages": 4,
+  "total_affected_files": 7,
+  "usages": {
+    "fastapi": {
+      "package": "fastapi",
+      "version": "0.110.0",
+      "vulnerable": true,
+      "severity_score": 75,
+      "total_occurrences": 32,
+      "affected_files_count": 5,
+      "files": [
+        {
+          "file_path": "app.py",
+          "imports": [
+            {
+              "statement": "from fastapi import FastAPI",
+              "line": 1,
+              "symbols": [
+                "FastAPI"
+              ]
+            },
+            {
+              "statement": "from fastapi.middleware.cors import CORSMiddleware",
+              "line": 2,
+              "symbols": [
+                "CORSMiddleware"
+              ]
+            }
+          ],
+          "functions": [
+            {
+              "name": "Module Init (FastAPI)",
+              "type": "class",
+              "line_start": 7,
+              "line_end": 7,
+              "snippet": "app = FastAPI(title=\"FluxPay Server\")",
+              "imported_symbols_used": [
+                "FastAPI"
+              ]
+            }
+          ],
+          "total_usages_count": 3
+        },
+        {
+          "file_path": "api/walletroutes.py",
+          "imports": [
+            {
+              "statement": "from fastapi import APIRouter, HTTPException, Depends",
+              "line": 1,
+              "symbols": [
+                "APIRouter",
+                "HTTPException",
+                "Depends"
+              ]
+            }
+          ],
+          "functions": [
+            {
+              "name": "send_wallet_otp_route",
+              "type": "endpoint",
+              "line_start": 14,
+              "line_end": 22,
+              "snippet": "def send_wallet_otp_route(current_user: dict = Depends(get_current_user)):\n    try:\n        phone = current_user.get(\"phone\")\n        if not phone:\n            raise ValueError(\"Phone number is required, but missing from user profile\")\n        walletservices.send_wallet_otp(phone)\n        return {\"message\": \"OTP sent successfully\"}",
+              "imported_symbols_used": [
+                "Depends"
+              ]
+            },
+            {
+              "name": "create_wallet_route",
+              "type": "endpoint",
+              "line_start": 25,
+              "line_end": 40,
+              "snippet": "def create_wallet_route(req: CreateWalletReq, current_user: dict = Depends(get_current_user)):\n    try:\n        user_id = str(current_user.get(\"id\"))\n        phone = current_user.get(\"phone\")\n        response = walletservices.create_wallet(\n            user_id=user_id,\n            phone_number=phone,",
+              "imported_symbols_used": [
+                "Depends"
+              ]
+            },
+            {
+              "name": "get_user_wallet_route",
+              "type": "endpoint",
+              "line_start": 43,
+              "line_end": 53,
+              "snippet": "def get_user_wallet_route(current_user: dict = Depends(get_current_user)):\n    try:\n        user_id = str(current_user.get(\"id\"))\n        wallet = walletservices.get_wallet(user_id=user_id)\n        # Avoid returning the hashed pin payload to frontend if not necessary\n        safe_wallet = {k: v for k, v in wallet.items() if k != \"transaction_pin\"}\n        return {\"message\": \"Wallet found\", \"wallet\": safe_wallet}",
+              "imported_symbols_used": [
+                "Depends"
+              ]
+            },
+            {
+              "name": "deposit_order_route",
+              "type": "endpoint",
+              "line_start": 67,
+              "line_end": 78,
+              "snippet": "def deposit_order_route(req: DepositOrderReq, current_user: dict = Depends(get_current_user)):\n    try:\n        user_id = str(current_user.get(\"id\"))\n        order = walletservices.create_deposit_order(user_id=user_id, amount=req.amount)\n        return {\n            \"order\": order,\n            \"key\": os.getenv(\"RAZORPAY_TEST_ID\") # Return the public key to the frontend dynamically",
+              "imported_symbols_used": [
+                "Depends"
+              ]
+            },
+            {
+              "name": "deposit_verify_route",
+              "type": "endpoint",
+              "line_start": 81,
+              "line_end": 95,
+              "snippet": "def deposit_verify_route(req: VerifyDepositReq, current_user: dict = Depends(get_current_user)):\n    try:\n        user_id = str(current_user.get(\"id\"))\n        result = walletservices.deposit_funds_to_wallet(\n            user_id=user_id, \n            amount=req.amount,\n            razorpay_payment_id=req.razorpay_payment_id,",
+              "imported_symbols_used": [
+                "Depends"
+              ]
+            },
+            {
+              "name": "get_deposit_history_route",
+              "type": "endpoint",
+              "line_start": 98,
+              "line_end": 106,
+              "snippet": "def get_deposit_history_route(current_user: dict = Depends(get_current_user)):\n    try:\n        user_id = str(current_user.get(\"id\"))\n        deposits = walletservices.get_deposit_history(user_id=user_id)\n        return {\"deposits\": deposits}\n    except ValueError as e:\n        raise HTTPException(status_code=400, detail=str(e))",
+              "imported_symbols_used": [
+                "HTTPException",
+                "Depends"
+              ]
+            },
+            {
+              "name": "Module Init (APIRouter)",
+              "type": "class",
+              "line_start": 6,
+              "line_end": 6,
+              "snippet": "router = APIRouter()",
+              "imported_symbols_used": [
+                "APIRouter"
+              ]
+            }
+          ],
+          "total_usages_count": 8
+        },
+        {
+          "file_path": "api/transactionroutes.py",
+          "imports": [
+            {
+              "statement": "from fastapi import APIRouter, HTTPException, Depends",
+              "line": 1,
+              "symbols": [
+                "APIRouter",
+                "HTTPException",
+                "Depends"
+              ]
+            }
+          ],
+          "functions": [
+            {
+              "name": "get_transaction_history_route",
+              "type": "endpoint",
+              "line_start": 30,
+              "line_end": 36,
+              "snippet": "def get_transaction_history_route(current_user: dict = Depends(get_current_user)):\n    try:\n        user_id = str(current_user[\"id\"])\n        history = transactionservices.get_transaction_history(user_id)\n        return {\"transactions\": history}\n    except Exception as e:\n        raise HTTPException(status_code=400, detail=str(e))",
+              "imported_symbols_used": [
+                "HTTPException",
+                "Depends"
+              ]
+            },
+            {
+              "name": "verify_phone_route",
+              "type": "endpoint",
+              "line_start": 39,
+              "line_end": 46,
+              "snippet": "def verify_phone_route(phone: str, current_user: dict = Depends(get_current_user)):\n    try:\n        name = transactionservices.get_name_by_phone(phone)\n        return {\"name\": name}\n    except ValueError as e:\n        raise HTTPException(status_code=404, detail=str(e))\n    except Exception as e:",
+              "imported_symbols_used": [
+                "HTTPException",
+                "Depends"
+              ]
+            },
+            {
+              "name": "verify_wallet_route",
+              "type": "endpoint",
+              "line_start": 49,
+              "line_end": 56,
+              "snippet": "def verify_wallet_route(wallet_id: str, current_user: dict = Depends(get_current_user)):\n    try:\n        name = transactionservices.get_name_by_wallet_id(wallet_id)\n        return {\"name\": name}\n    except ValueError as e:\n        raise HTTPException(status_code=404, detail=str(e))\n    except Exception as e:",
+              "imported_symbols_used": [
+                "HTTPException",
+                "Depends"
+              ]
+            },
+            {
+              "name": "send_by_phone_route",
+              "type": "endpoint",
+              "line_start": 59,
+              "line_end": 74,
+              "snippet": "def send_by_phone_route(req: TransactPhoneReq, current_user: dict = Depends(get_current_user)):\n    try:\n        user_id = str(current_user[\"id\"])\n        tx = transactionservices.transact_by_receiver_phone(\n            user_id=user_id, \n            receiver_phone=req.receiver_phone, \n            amount=req.amount,",
+              "imported_symbols_used": [
+                "Depends"
+              ]
+            },
+            {
+              "name": "send_by_email_route",
+              "type": "endpoint",
+              "line_start": 77,
+              "line_end": 92,
+              "snippet": "def send_by_email_route(req: TransactMailReq, current_user: dict = Depends(get_current_user)):\n    try:\n        user_id = str(current_user[\"id\"])\n        tx = transactionservices.transact_by_receiver_mail(\n            user_id=user_id, \n            receiver_email=req.receiver_email, \n            amount=req.amount,",
+              "imported_symbols_used": [
+                "Depends"
+              ]
+            },
+            {
+              "name": "send_by_wallet_route",
+              "type": "endpoint",
+              "line_start": 95,
+              "line_end": 110,
+              "snippet": "def send_by_wallet_route(req: TransactWalletReq, current_user: dict = Depends(get_current_user)):\n    try:\n        user_id = str(current_user[\"id\"])\n        tx = transactionservices.transact_by_receiver_wallet(\n            user_id=user_id, \n            receiver_wallet_id=req.receiver_wallet_id, \n            amount=req.amount,",
+              "imported_symbols_used": [
+                "Depends"
+              ]
+            },
+            {
+              "name": "Module Init (APIRouter)",
+              "type": "class",
+              "line_start": 6,
+              "line_end": 6,
+              "snippet": "router = APIRouter()",
+              "imported_symbols_used": [
+                "APIRouter"
+              ]
+            }
+          ],
+          "total_usages_count": 8
+        },
+        {
+          "file_path": "api/userroutes.py",
+          "imports": [
+            {
+              "statement": "from fastapi import APIRouter, HTTPException",
+              "line": 1,
+              "symbols": [
+                "APIRouter",
+                "HTTPException"
+              ]
+            }
+          ],
+          "functions": [
+            {
+              "name": "send_otp_route",
+              "type": "endpoint",
+              "line_start": 49,
+              "line_end": 55,
+              "snippet": "def send_otp_route(req: SendOtpReq):\n    try:\n        otp = userservices.generate_otp()\n        userservices.send_otp_email(req.email, otp)\n        return {\"message\": \"OTP sent successfully\"}\n    except Exception as e:\n        raise HTTPException(status_code=400, detail=str(e))",
+              "imported_symbols_used": [
+                "HTTPException"
+              ]
+            },
+            {
+              "name": "send_otp_sms_route",
+              "type": "endpoint",
+              "line_start": 71,
+              "line_end": 77,
+              "snippet": "def send_otp_sms_route(req: SendOtpSmsReq):\n    try:\n        otp = userservices.generate_otp()\n        userservices.send_otp_sms(req.phone, otp)\n        return {\"message\": \"OTP sent successfully\"}\n    except Exception as e:\n        raise HTTPException(status_code=400, detail=str(e))",
+              "imported_symbols_used": [
+                "HTTPException"
+              ]
+            },
+            {
+              "name": "Module Init (APIRouter)",
+              "type": "class",
+              "line_start": 6,
+              "line_end": 6,
+              "snippet": "router = APIRouter()",
+              "imported_symbols_used": [
+                "APIRouter"
+              ]
+            },
+            {
+              "name": "Module Init (HTTPException)",
+              "type": "class",
+              "line_start": 39,
+              "line_end": 39,
+              "snippet": "raise HTTPException(status_code=400, detail=str(e))",
+              "imported_symbols_used": [
+                "HTTPException"
+              ]
+            },
+            {
+              "name": "Module Init (HTTPException)",
+              "type": "class",
+              "line_start": 107,
+              "line_end": 107,
+              "snippet": "raise HTTPException(status_code=401, detail=str(e))",
+              "imported_symbols_used": [
+                "HTTPException"
+              ]
+            },
+            {
+              "name": "Module Init (HTTPException)",
+              "type": "class",
+              "line_start": 109,
+              "line_end": 109,
+              "snippet": "raise HTTPException(status_code=400, detail=str(e))",
+              "imported_symbols_used": [
+                "HTTPException"
+              ]
+            },
+            {
+              "name": "Module Init (HTTPException)",
+              "type": "class",
+              "line_start": 123,
+              "line_end": 123,
+              "snippet": "raise HTTPException(status_code=400, detail=str(e))",
+              "imported_symbols_used": [
+                "HTTPException"
+              ]
+            },
+            {
+              "name": "Module Init (HTTPException)",
+              "type": "class",
+              "line_start": 125,
+              "line_end": 125,
+              "snippet": "raise HTTPException(status_code=400, detail=str(e))",
+              "imported_symbols_used": [
+                "HTTPException"
+              ]
+            }
+          ],
+          "total_usages_count": 9
+        },
+        {
+          "file_path": "services/userservices.py",
+          "imports": [
+            {
+              "statement": "from fastapi import Depends, HTTPException",
+              "line": 207,
+              "symbols": [
+                "Depends",
+                "HTTPException"
+              ]
+            },
+            {
+              "statement": "from fastapi.security import OAuth2PasswordBearer",
+              "line": 208,
+              "symbols": [
+                "OAuth2PasswordBearer"
+              ]
+            }
+          ],
+          "functions": [
+            {
+              "name": "get_current_user",
+              "type": "function",
+              "line_start": 213,
+              "line_end": 236,
+              "snippet": "def get_current_user(token: str = Depends(oauth2_scheme)):\n    credentials_exception = HTTPException(\n        status_code=401,\n        detail=\"Could not validate credentials\",\n        headers={\"WWW-Authenticate\": \"Bearer\"},\n    )\n    try:",
+              "imported_symbols_used": [
+                "HTTPException",
+                "Depends"
+              ]
+            },
+            {
+              "name": "Module Init (OAuth2PasswordBearer)",
+              "type": "class",
+              "line_start": 211,
+              "line_end": 211,
+              "snippet": "oauth2_scheme = OAuth2PasswordBearer(tokenUrl=\"api/users/login\")",
+              "imported_symbols_used": [
+                "OAuth2PasswordBearer"
+              ]
+            }
+          ],
+          "total_usages_count": 4
+        }
+      ]
+    },
+    "sqladmin": {
+      "package": "sqladmin",
+      "version": "0.16.1",
+      "vulnerable": true,
+      "severity_score": 87,
+      "total_occurrences": 0,
+      "affected_files_count": 0,
+      "files": []
+    },
+    "supabase": {
+      "package": "supabase",
+      "version": "2.3.4",
+      "vulnerable": false,
+      "severity_score": 0,
+      "total_occurrences": 2,
+      "affected_files_count": 1,
+      "files": [
+        {
+          "file_path": "db.py",
+          "imports": [
+            {
+              "statement": "from supabase import create_client, Client",
+              "line": 2,
+              "symbols": [
+                "create_client",
+                "Client"
+              ]
+            }
+          ],
+          "functions": [
+            {
+              "name": "Module Init (create_client)",
+              "type": "class",
+              "line_start": 13,
+              "line_end": 13,
+              "snippet": "supabase: Client = create_client(supabase_url, supabase_key)",
+              "imported_symbols_used": [
+                "create_client"
+              ]
+            }
+          ],
+          "total_usages_count": 2
+        }
+      ]
+    },
+    "bcrypt": {
+      "package": "bcrypt",
+      "version": "4.1.2",
+      "vulnerable": false,
+      "severity_score": 0,
+      "total_occurrences": 3,
+      "affected_files_count": 1,
+      "files": [
+        {
+          "file_path": "services/userservices.py",
+          "imports": [
+            {
+              "statement": "import bcrypt",
+              "line": 1,
+              "symbols": [
+                "bcrypt"
+              ]
+            }
+          ],
+          "functions": [
+            {
+              "name": "hash_password",
+              "type": "function",
+              "line_start": 102,
+              "line_end": 106,
+              "snippet": "def hash_password(password: str) -> str:\n    # generate salt and hash password\n    salt = bcrypt.gensalt()\n    hashed = bcrypt.hashpw(password.encode('utf-8'), salt)\n    return hashed.decode('utf-8')",
+              "imported_symbols_used": [
+                "bcrypt"
+              ]
+            },
+            {
+              "name": "verify_password",
+              "type": "function",
+              "line_start": 108,
+              "line_end": 109,
+              "snippet": "def verify_password(plain_password: str, hashed_password: str) -> bool:\n    return bcrypt.checkpw(plain_password.encode('utf-8'), hashed_password.encode('utf-8'))",
+              "imported_symbols_used": [
+                "bcrypt"
+              ]
+            }
+          ],
+          "total_usages_count": 3
+        }
+      ]
+    },
+    "twilio": {
+      "package": "twilio",
+      "version": "9.0.2",
+      "vulnerable": false,
+      "severity_score": 0,
+      "total_occurrences": 5,
+      "affected_files_count": 2,
+      "files": [
+        {
+          "file_path": "services/walletservices.py",
+          "imports": [
+            {
+              "statement": "from twilio.rest import Client",
+              "line": 5,
+              "symbols": [
+                "Client"
+              ]
+            }
+          ],
+          "functions": [
+            {
+              "name": "Module Init (Client)",
+              "type": "class",
+              "line_start": 12,
+              "line_end": 12,
+              "snippet": "razorpay_client = razorpay.Client(",
+              "imported_symbols_used": [
+                "Client"
+              ]
+            },
+            {
+              "name": "Module Init (Client)",
+              "type": "class",
+              "line_start": 26,
+              "line_end": 26,
+              "snippet": "client = Client(account_sid, auth_token)",
+              "imported_symbols_used": [
+                "Client"
+              ]
+            }
+          ],
+          "total_usages_count": 3
+        },
+        {
+          "file_path": "services/userservices.py",
+          "imports": [
+            {
+              "statement": "from twilio.rest import Client",
+              "line": 9,
+              "symbols": [
+                "Client"
+              ]
+            }
+          ],
+          "functions": [
+            {
+              "name": "Module Init (Client)",
+              "type": "class",
+              "line_start": 56,
+              "line_end": 56,
+              "snippet": "client = Client(account_sid, auth_token)",
+              "imported_symbols_used": [
+                "Client"
+              ]
+            }
+          ],
+          "total_usages_count": 2
+        }
+      ]
+    },
+    "starlette": {
+      "package": "starlette",
+      "version": "0.36.3",
+      "vulnerable": true,
+      "severity_score": 71,
+      "total_occurrences": 0,
+      "affected_files_count": 0,
+      "files": []
+    },
+    "pydantic": {
+      "package": "pydantic",
+      "version": "2.6.4",
+      "vulnerable": false,
+      "severity_score": 0,
+      "total_occurrences": 3,
+      "affected_files_count": 3,
+      "files": [
+        {
+          "file_path": "api/walletroutes.py",
+          "imports": [
+            {
+              "statement": "from pydantic import BaseModel",
+              "line": 2,
+              "symbols": [
+                "BaseModel"
+              ]
+            }
+          ],
+          "functions": [],
+          "total_usages_count": 1
+        },
+        {
+          "file_path": "api/transactionroutes.py",
+          "imports": [
+            {
+              "statement": "from pydantic import BaseModel",
+              "line": 2,
+              "symbols": [
+                "BaseModel"
+              ]
+            }
+          ],
+          "functions": [],
+          "total_usages_count": 1
+        },
+        {
+          "file_path": "api/userroutes.py",
+          "imports": [
+            {
+              "statement": "from pydantic import BaseModel",
+              "line": 2,
+              "symbols": [
+                "BaseModel"
+              ]
+            }
+          ],
+          "functions": [],
+          "total_usages_count": 1
+        }
+      ]
+    },
+    "aiohttp": {
+      "package": "aiohttp",
+      "version": "3.9.3",
+      "vulnerable": true,
+      "severity_score": 81,
+      "total_occurrences": 0,
+      "affected_files_count": 0,
+      "files": []
+    }
+  }
+}
